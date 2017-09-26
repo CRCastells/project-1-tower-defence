@@ -1,4 +1,0 @@
-As a user I can select a tower to place, so that I can prevent the wave from advancing.			
-as a user I can activate the next wave so that i can prepare before it comes.					
-as a user i want so see the path clearly so that i can make a strategy for it					
-as a user i want to store my save so that i can return to it later.									
