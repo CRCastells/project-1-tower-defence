@@ -15,10 +15,10 @@ var eSprites,bullets,bottom,exit,img,animated,tImage,eneX,eneY,bull;
 /* -------------------- canvas functions  -------------------- */
 //images to grab prior to the page loading
 function preload() {
- animated = loadAnimation("/images/run/24.png","/images/run/31.png");
+ animated = loadAnimation("../images/run/24.png","../images/run/31.png");
  img = loadImage("../images/playarea.png");
- tImage = loadImage("/images/tower.png");
- bull = loadImage("/images/bullet.png");
+ tImage = loadImage("../images/tower.png");
+ bull = loadImage("../images/bullet.png");
 }
 //one time run of the canvas/ functions
 //functions defined in p5 or p5.play must be used in setup or draw or in functions only used within the two
