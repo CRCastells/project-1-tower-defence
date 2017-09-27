@@ -1,7 +1,7 @@
 
 //instance variables for stats/traits of sprites
 //user data
-var waveTime = 3;
+var waveTime = 30;
 var gold = 500;
 var level = 0;
 var lives = 30;
@@ -36,9 +36,6 @@ function setup() {
   exit = createSprite(900,250,20,300);
 
 
-  textSize(32);
-
-  playerLives = text("text",450,50);
   //make it rigid
   bottom.immovable = true;
   exit.immovable = true;
@@ -51,7 +48,7 @@ function setup() {
 	//function to place all enemy sprites on canvas
 	function wave(level){
 		//loop 10 times to place sprites
-		for (let i = 0; i < 10 +(level * 2); i++) {
+		for (let i = 0; i < 30 +(level * 2); i++) {
 			//wait 300ms
 			setTimeout(function(){
 				//new enemy
@@ -75,10 +72,10 @@ function setup() {
 				waveTime--;
 			// if the wave is out of time, reset the timer and stop the function
 			if (waveTime <= 0){
-				waveTime = 3;
+				waveTime = 30;
 				return;
 			}
-		},10000);
+		},1000);
 	}
 
 	// begins the wave by calling the wave and timer functions and incrementing the level for next call
@@ -89,12 +86,10 @@ function setup() {
 			wave(level);
 			timer();
 			level++;
-		},10000);	
+		},30000);	
 	}
 	//first time calls to set up the waves
 	timer();
-	wave(level);
-	//startWaves();
 
 }
 function mouseClicked() {
@@ -128,7 +123,7 @@ function Enemy(){
 		//hp stat, how many bullets can it take before removing from canvas
 		this.hp = 10;
 		//how fast the sprite moves
-		this.speed = 3;
+		this.speed = 7;
 		//what the sprite looks like
 		this.sprite.addAnimation("running",animated);
 
@@ -143,6 +138,11 @@ function fire(enemyPos){
 	//send bullet at enemy
 
 }
+function youLose(){
+	var box = document.querySelector('.over');
+	box.style.display = 'inherit';
+	remove();
+}
 
 function draw() {
 
@@ -150,22 +150,32 @@ function draw() {
 	background(img);
 	//required to have any sprites appear
   	drawSprites();
-  
+  	//live update lives counter
+  	document.getElementById('lives').innerText = "Lives: " + lives;
+  	document.getElementById('wave').innerText = "Wave Time: " + waveTime;
+  	document.getElementById('level').innerText = "Level: " + level;
+  	document.getElementById('gold').innerText = "Gold: " + gold;
   	//when enemy sprites hit the bottom, bounce!
   	eSprites.bounce(bottom,function(sprite){
   		//bounce does all the position work for me, 
   		//so I was printing "boing!!" into the console to debug this originally
   		//console.log("Boing!!");
   	});
+  	//removes enemies from canvas and enemy group and array and deducts lives.
   	eSprites.collide(exit, function(sprite){
   		sprite.remove();
-  		lives--;
+  		//lives--;
   		enemies.shift();
 
   	})
 
   	
-
+	if (lives <= 0) {
+		//stops draw loop
+		noLoop();
+		//ends the game
+		youLose();
+	}
 }
 
 
