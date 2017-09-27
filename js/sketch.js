@@ -86,7 +86,7 @@ function draw() {
 		youLose();
 	}
 	//fire rate of the towers. dont want them to rapid fire now do we?
-	if(counter > 10){
+	if(counter > 30){
 
 		counter = 0;
 		towers.forEach(function(tower){
