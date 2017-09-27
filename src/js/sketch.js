@@ -11,14 +11,15 @@ var towers= [];
 var img;
 //enemy sprite group
 var eSprites;
+//bullet group
+var bullets;
+//walls
 var bottom;
 var exit;
 // image data
 var animated
 var tImage;
-var playerLives;
 
-var bullets;
 
 //images to grab prior to the page loading
 function preload() {
@@ -44,6 +45,7 @@ function setup() {
   exit.immovable = true;
   //enemy sprites group defined here to allow for collider to be used.
   eSprites = new Group();
+  //define bulelts group for collisions
   bullets = new Group();
   
 
@@ -51,7 +53,7 @@ function setup() {
 	//function to place all enemy sprites on canvas
 	function wave(level){
 		//loop 10 times to place sprites
-		for (let i = 0; i < 10 +(level * 10); i++) {
+		for (let i = 0; i < 10 +(level * 2); i++) {
 			//wait 300ms
 			setTimeout(function(){
 				//new enemy
@@ -60,6 +62,7 @@ function setup() {
 				sp.sprite.addToGroup(eSprites);
 				//shoot the sprite onto the canvas and downwards toward the 'exit'
 				sp.sprite.setSpeed(sp.speed,sp.direction);
+				//just a backup to delete the sprite if it doenst get removed by colliders
 				sp.sprite.life = 385;
 				//add the enemy object into the enemies array
 				enemies.push(sp);
@@ -75,6 +78,7 @@ function setup() {
 				waveTime--;
 			// if the wave is out of time, reset the timer and stop the function
 			if (waveTime <= 0){
+				//reset the wave time
 				waveTime = 10;
 				return;
 			}
@@ -99,7 +103,7 @@ function setup() {
 function mouseClicked() {
 	//can player afford the cost of the tower?
 	if (gold > 120){
-		//place a tower at the clicked position
+		//place a tower at the clicked position and take away the gold cost
 		var tower = new Tower(mouseX,mouseY);
 		gold = gold - 120;
 	}
@@ -112,12 +116,14 @@ function Tower(x, y) {
 		this.dmg = 5;
 		//how fast it can fire, in ms
 		this.fireRate = 500;
+		//tower coords
 		this.x = x;
 		this.y = y;
 		//actual sprite on the canvas
 		this.sprite = createSprite(x,y,75,75);
 		//image for the sprite
 		this.sprite.addImage(tImage);
+		//add to tower array
 		towers.push(this);
 }
 
@@ -148,16 +154,20 @@ function fire(towerPosX, towerPosY, range = 10){
 // bullet will be sent toward [attractionPoint()] the enemy
 // bullet.attractionPoint(30,eSprites[0].enemyXpos,eSprites[0].enemyYpos);
 	projectile.addToGroup(bullets);
+	//remove bullets after the range is hit.
 	projectile.life = range;
 	projectile.attractionPoint(40,enemies[0].sprite.position.x,enemies[0].sprite.position.y);
-// the location of the enemy will be updated.
+// the location of the first enemy will be used.
 }
 
 
 
 function youLose(){
+	//grab the box
 	var box = document.querySelector('.over');
+	//make the game over screen display
 	box.style.display = 'inherit';
+	//delete the canvas
 	remove();
 }
 var counter = 0;
@@ -167,17 +177,19 @@ function draw() {
 	background(img);
 	//required to have any sprites appear
   	drawSprites();
-  	//live update lives counter
+  	//live updates the user data
   	document.getElementById('lives').innerText = "Lives: " + lives;
   	document.getElementById('wave').innerText = "Wave Time: " + waveTime;
   	document.getElementById('level').innerText = "Level: " + level;
   	document.getElementById('gold').innerText = "Gold: " + gold;
+
   	//when enemy sprites hit the bottom, bounce!
   	eSprites.bounce(bottom,function(sprite){
   		//bounce does all the position work for me, 
   		//so I was printing "boing!!" into the console to debug this originally
   		//console.log("Boing!!");
   	});
+
   	//removes enemies from canvas and enemy group and array and deducts lives.
   	eSprites.collide(exit, function(sprite){
   		sprite.remove();
@@ -186,6 +198,7 @@ function draw() {
 
   	})
 
+  	//when a bullet hits an enemy, remove both and give the player 5 gold.
   	eSprites.collide(bullets,function(sprite1,sprite2){
   		sprite1.remove();
   		sprite2.remove();
@@ -194,7 +207,7 @@ function draw() {
 
   	});
 
-  	
+  	//has the player lost?
 	if (lives <= 0) {
 		//stops draw loop
 		noLoop();
@@ -202,6 +215,7 @@ function draw() {
 		youLose();
 	}
 
+	//fire rate of the towers. dont want them to rapid fire now do we?
 	if(counter > 60){
 		counter = 0;
 		towers.forEach(function(tower){
