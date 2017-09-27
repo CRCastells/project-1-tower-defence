@@ -1,0 +1,101 @@
+*{
+	padding: 0;
+	margin: 0;
+	box-sizing: border-box;
+	color: white;
+}
+body {
+	background-color: orange;
+	padding: 30px;
+	text-align: center;
+}
+section {
+	background: black;
+	opacity: .7;
+	width: 45%;
+	height: 90vh;
+	display: inline-block;
+	margin: 0 10px;
+	padding: 20px;
+	text-align: center;
+	border: 5px solid grey;
+	float: left;
+}
+
+h1 {
+	margin: 150px 0;
+}
+
+form {
+	border: 2px solid black;
+	display: inline-block;
+	width: 45%;
+	margin: 0 2%;
+	height: 150px;
+	float: left;
+}
+
+input {
+	display: block;
+	margin: 5px;
+	color: red;
+}
+#menu {
+	max-width: 300px;
+	float: left;
+	padding: 50px;
+}
+#canvasHolder {
+	float: none;
+	min-width: 500px;
+	width: 70%;
+	min-height: 500px;
+
+}
+
+/*  */
+div {
+	background: grey;
+	
+	margin: 0 auto 10px auto;
+	padding-top: 20px;
+
+}
+
+
+
+/* body of index.html */
+
+#main {
+	background: url(../images/2castle_england.jpg);
+	background-size: cover;
+}
+/* play button */
+#play {
+	margin: 0 auto;
+	height: 50px;
+	width: 200px;
+	background: blue;
+}
+/* user data field */
+.data {
+	height: 100px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

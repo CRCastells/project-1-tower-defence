@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Landing Page</title>
+	<link rel="stylesheet" href="css/style.css">
+	<script src="js/login.js"></script>
+</head>
+<body id="main">
+	<section>
+		<h1>Tower Defence!</h1>
+		<p>Defend the gate from the oncoming horde!</p>
+	</section>
+	<section>
+		<form id="exists" action="GET">
+			Existing User:
+
+			<input id="eUser" type="text" placeholder="Username" required="true">
+			<input id="ePass" type="Password" placeholder="Password" required="true">
+			<input id="get" type="submit" value="Log In">
+		</form>
+		<form id="new" action="POST">
+			New User:
+			<input id="nUser" type="text" placeholder="Username" required="true">
+			<input id="nPass" type="Password" placeholder="Password" required="true">
+			<input  id="nConfirm" type="Password" placeholder="retype Password" required="true">
+			<input id="create" type="submit" value="Create Account">
+		</form>
+		<a href="game.html"><button id='play'>PLAY</button></a>
+	</section>
+</body>
+</html>
