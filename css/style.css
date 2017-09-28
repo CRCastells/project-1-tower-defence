@@ -28,17 +28,17 @@ h1 {
 
 form {
 	border: 2px solid black;
-	display: inline-block;
-	width: 45%;
 	margin: 0 2%;
 	height: 150px;
-	float: left;
+	text-align: center;
 }
 
 input {
 	display: block;
-	margin: 5px;
+	margin: 5px auto;
 	color: red;
+	text-align: center;
+
 }
 
 #menu {
@@ -75,7 +75,7 @@ div {
 }
 /* play button */
 #play {
-	margin: 0 auto;
+	margin: 200px auto;
 	height: 50px;
 	width: 200px;
 	background: blue;

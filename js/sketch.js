@@ -1,6 +1,6 @@
 //instance variables for stats/traits of sprites
 //user data
-var waveTime = 30;
+var waveTime = 15;
 var gold = 500;
 var cost = 300;
 var level = 0;
@@ -52,7 +52,7 @@ function draw() {
   	document.getElementById('wave').innerText = "Wave Time: " + waveTime;
   	document.getElementById('level').innerText = "Level: " + level;
   	document.getElementById('gold').innerText = "Gold: " + gold;
-  	document.getElementById('description').innerText = "Number of Enemies in next Level: " + (10+(level*level));
+  	document.getElementById('description').innerText = "Number of Enemies in next Level: " + (10+(level*level) + "\n Cost of tower: " + cost);
   	//when enemy sprites hit the bottom, bounce!
   	eSprites.bounce(bottom,function(sprite){
   		//bounce does all the position work for me, 
@@ -165,7 +165,7 @@ function timer(){
 		// if the wave is out of time, reset the timer and stop the function
 		if (waveTime <= 0){
 			//reset the wave time
-			waveTime = 30;
+			waveTime = 15;
 			return;
 		}
 	},1000);
@@ -177,7 +177,7 @@ function startWaves(){
 		wave(level);
 		
 		level++;
-	},30000);	
+	},15000);	
 }
 
 //function to place all enemy sprites on canvas
