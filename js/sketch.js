@@ -6,6 +6,7 @@ var cost = 300;
 var level = 0;
 var counter = 0;
 var lives = 30;
+var score = 0;
 //sprite data
 var enemies = [];
 var towers = [];
@@ -53,6 +54,8 @@ function draw() {
   	document.getElementById('level').innerText = "Level: " + level;
   	document.getElementById('gold').innerText = "Gold: " + gold;
   	document.getElementById('description').innerText = "Number of Enemies in next Level: " + (10+(level*level) + "\n Cost of tower: " + cost);
+  	document.getElementById('score').innerText = "Score: " + score;
+
   	//when enemy sprites hit the bottom, bounce!
   	eSprites.bounce(bottom,function(sprite){
   		//bounce does all the position work for me, 
@@ -76,6 +79,7 @@ function draw() {
   		sprite2.remove();
   		enemies.shift();
   		gold +=5;
+  		score += 50*waveTime;
 
   	});
   	//has the player lost?
