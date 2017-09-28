@@ -92,14 +92,25 @@ div {
 	vertical-align: middle;
 	line-height: 100%;
 	color: red;
-	padding-top: 200px;
+	padding-top: 150px;
 	font-size: 40px;
 	display: none;
 }
 
 .selecting {
 	height: 80%;
+	text-align: center;
+	padding: 10px;
 }	
+
+button {
+	display: block;
+	margin: 0 auto;
+	margin-top: 70px;
+	height: 75px;
+	width: 75px;
+	background: orange;
+}
 
 
 

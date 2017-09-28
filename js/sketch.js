@@ -7,9 +7,12 @@ var level = 0;
 var counter = 0;
 var lives = 30;
 var score = 0;
+var highscores = [];
 //sprite data
 var enemies = [];
 var towers = [];
+var range;
+var fireInterval;
 //enemy sprite/bullets group;walls;image data; xy coords;
 var eSprites,bullets,bottom,exit,img,animated,tImage,eneX,eneY,bull;
 
@@ -40,6 +43,7 @@ function setup() {
   bullets = new Group();
 	//first time calls to set up the waves
 	timer();
+	getScores();
 	startWaves();
 }
 
@@ -79,7 +83,7 @@ function draw() {
   		sprite2.remove();
   		enemies.shift();
   		gold +=5;
-  		score += 50*waveTime;
+  		score += (10*waveTime);
 
   	});
   	//has the player lost?
@@ -144,7 +148,7 @@ function Tower(x, y) {
 	towers.push(this);
 }
 
-function fire(towerPosX, towerPosY, range = 20){
+function fire(towerPosX, towerPosY, ){
 	// 	a tower will fire every 500ms
 	// setinterval(fire(),500);
 	// fire will create a bullet
@@ -155,7 +159,7 @@ function fire(towerPosX, towerPosY, range = 20){
 	projectile.addToGroup(bullets);
 	projectile.addImage(bull);
 		//remove bullets after the range is hit.
-	projectile.life = range;
+	projectile.life =  range | 16;
 	projectile.attractionPoint(30,eneX,eneY);
 	// the location of the first enemy will be used.
 }
@@ -203,12 +207,70 @@ function wave(level){
 		},i*200);
 	} 	
 }
-
+var name;
 function youLose(){
 	//grab the box
 	var box = document.querySelector('.over');
 	//make the game over screen display
 	box.style.display = 'inherit';
+
 	//delete the canvas
 	remove();
+	setTimeout(function(){
+		var user = {
+			name: prompt("Enter your name: "),
+			points: score
+		}
+		addScore(user);
+		var scoreString = ""
+		for (var i = 0; i < 5; i++) {
+			scoreString += (i+1) + ". " + highscores[i].name + "\t"+ highscores[i].points + "<br>";
+		}
+		box.innerHTML += "High Scores: <br>" + scoreString;
+	},2000);
 }
+
+function getScores(){
+	if (!localStorage.highscores) {
+		var scores = [];
+		scores.push({
+				name: "Donatello",
+				points: 35000
+			},
+			{
+				name: "Michaelangelo",
+				points: 50000
+			},
+			{
+				name: "Raphael",
+				points: 40000
+			},
+			{
+				name: "Leonardo",
+				points: 45000
+			});
+		localStorage.highscores = JSON.stringify(scores);
+
+	}
+	highscores = JSON.parse(localStorage.highscores);
+	sortScores();
+
+}
+
+function sortScores(){
+	highscores.sort(function (a, b) {
+  		return b.points - a.points;
+	});
+	console.log(highscores);
+}
+
+function addScore(user){
+	highscores.push(user);
+	sortScores();
+	localStorage.highscores = JSON.stringify(highscores);
+}
+
+
+
+
+
