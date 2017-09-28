@@ -8,11 +8,13 @@ var counter = 0;
 var lives = 30;
 var score = 0;
 var highscores = [];
+var rangecost = 600;
+var speedcost = 1000;
 //sprite data
 var enemies = [];
 var towers = [];
-var range;
-var fireInterval;
+var range = 16;
+var fireInterval = 30;
 //enemy sprite/bullets group;walls;image data; xy coords;
 var eSprites,bullets,bottom,exit,img,animated,tImage,eneX,eneY,bull;
 
@@ -45,6 +47,7 @@ function setup() {
 	timer();
 	getScores();
 	startWaves();
+	initUpgrades();
 }
 
 function draw() {
@@ -59,6 +62,8 @@ function draw() {
   	document.getElementById('gold').innerText = "Gold: " + gold;
   	document.getElementById('description').innerText = "Number of Enemies in next Level: " + (10+(level*level) + "\n Cost of tower: " + cost);
   	document.getElementById('score').innerText = "Score: " + score;
+  	document.getElementById('range').innerHTML = "Range <br> " + rangecost + " gold";
+  	document.getElementById('speed').innerHTML = "Fire Speed <br> " + speedcost + " gold";
 
   	//when enemy sprites hit the bottom, bounce!
   	eSprites.bounce(bottom,function(sprite){
@@ -94,7 +99,7 @@ function draw() {
 		youLose();
 	}
 	//fire rate of the towers. dont want them to rapid fire now do we?
-	if(counter > 30){
+	if(counter > fireInterval){
 
 		counter = 0;
 		towers.forEach(function(tower){
@@ -105,9 +110,19 @@ function draw() {
 	counter++;
 }
 
+function mouseOnCanvas(){
+	if (mouseX > 0 && mouseX < 900){
+		if (mouseY > 0 && mouseY < 550){
+			return true;
+		}
+	}
+
+	return false;
+}
+
 function mouseClicked() {
 	//can player afford the cost of the tower?
-	if (gold >= cost){
+	if (gold >= cost && mouseOnCanvas()){
 		//place a tower at the clicked position and take away the gold cost
 		var tower = new Tower(mouseX,mouseY);
 		gold = gold - cost;
@@ -159,7 +174,7 @@ function fire(towerPosX, towerPosY, ){
 	projectile.addToGroup(bullets);
 	projectile.addImage(bull);
 		//remove bullets after the range is hit.
-	projectile.life =  range | 16;
+	projectile.life =  range;
 	projectile.attractionPoint(30,eneX,eneY);
 	// the location of the first enemy will be used.
 }
@@ -191,7 +206,7 @@ function startWaves(){
 //function to place all enemy sprites on canvas
 function wave(level){
 	//loop 10 times to place sprites
-	for (let i = 0; i < 10 +(level * level); i++) {
+	for (let i = 0; i < 10 +(level * (level/2)); i++) {
 		//wait 300ms
 		setTimeout(function(){
 			//new enemy
@@ -270,6 +285,23 @@ function addScore(user){
 	localStorage.highscores = JSON.stringify(highscores);
 }
 
+function initUpgrades(){
+
+	document.querySelector('#range').addEventListener("click",function(){
+		if (gold >= rangecost){
+			gold -= rangecost;
+			range *= 2;
+			rangecost *=2;
+		}
+	});
+	document.querySelector('#speed').addEventListener("click",function(){
+		if (gold >= speedcost){
+			gold -= speedcost;
+			fireInterval /= 1.5;
+			speedcost *= 2;
+		}
+	});
+}
 
 
 
