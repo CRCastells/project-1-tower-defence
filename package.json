@@ -1,0 +1,24 @@
+{
+  "name": "project_1",
+  "version": "1.0.0",
+  "description": "Tower Defence game for Project 1 - Javascript",
+  "main": "index.js",
+  "dependencies": {
+    "node-static": "^0.7.10"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kelrynn/project-1-tower-defence.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Kelrynn/project-1-tower-defence/issues"
+  },
+  "homepage": "https://github.com/Kelrynn/project-1-tower-defence#readme"
+}
