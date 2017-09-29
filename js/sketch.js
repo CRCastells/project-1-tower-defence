@@ -1,6 +1,5 @@
 //instance variables for stats/traits of sprites
 //user data
-var waveTime = 15;
 var gold = 500;
 var cost = 300;
 var level = 0;
@@ -58,7 +57,7 @@ function draw() {
   	drawSprites();
   	//live updates the user data
   	document.getElementById('lives').innerText = "Lives: " + lives;
-  	document.getElementById('wave').innerText = "Wave Time: " + waveTime;
+  //	document.getElementById('wave').innerText = "Wave Time: " + waveTime;
   	document.getElementById('level').innerText = "Level: " + level;
   	document.getElementById('gold').innerText = "Gold: " + gold;
   	document.getElementById('description').innerText = "Number of Enemies in next Level: " + (10+(level*level) + "\n Cost of tower: " + cost);
@@ -92,7 +91,7 @@ function draw() {
   		sprite2.remove();
   		enemies.shift();
   		gold +=5;
-  		score += (10*waveTime);
+  		score += (100);
 
   	});
   	//has the player lost?
@@ -186,19 +185,18 @@ function fire(towerPosX, towerPosY, ){
 }
 
 //wave countdown timer
-function timer(){
-	//every second
-	setInterval(function(){
-		//deduct the wavetime
-			waveTime--;
-		// if the wave is out of time, reset the timer and stop the function
-		if (waveTime <= 0){
-			//reset the wave time
-			waveTime = 15;
-			return;
-		}
-	},1000);
-}
+// function timer(){
+// 	//every second
+// 	for (var i = 0; i <= 15; i++) {
+// 		setTimeout(function(){
+// 		//deduct the wavetime
+// 			waveTime--;
+// 		// if the wave is out of time, reset the timer and stop the function
+		
+// 		},i*1000);
+// 	}
+
+// }
 
 
 
@@ -218,7 +216,7 @@ function wave(level){
 			sp.sprite.life = 385;
 			//add the enemy object into the enemies array
 			enemies.push(sp);
-		},i*200);
+		},((i/((level+1)/4)))*200);
 	} 	
 }
 var name;
@@ -303,9 +301,7 @@ function initUpgrades(){
 }
 
 function startNextWave() {
-	timer();
 	wave(level++);
-	
 }
 
 
