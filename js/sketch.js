@@ -15,6 +15,7 @@ var enemies = [];
 var towers = [];
 var range = 16;
 var fireInterval = 30;
+var towhurs;
 //enemy sprite/bullets group;walls;image data; xy coords;
 var eSprites,bullets,bottom,exit,img,animated,tImage,eneX,eneY,bull;
 
@@ -43,6 +44,7 @@ function setup() {
   eSprites = new Group();
   //define bulelts group for collisions
   bullets = new Group();
+  towhurs = new Group();
 	//first time calls to set up the waves
 	timer();
 	getScores();
@@ -71,6 +73,10 @@ function draw() {
   		//so I was printing "boing!!" into the console to debug this originally
   		//console.log("Boing!!");
   	});
+
+  	//displace function to prevent the overlap of towers
+  	towhurs.displace(towhurs);
+  	//only allow towers to fire if there is an enemy on screen
   	if(enemies.length > 0){
   	  	eneX = eSprites[0].position.x;
   	  	eneY = eSprites[0].position.y;
@@ -110,6 +116,7 @@ function draw() {
 	counter++;
 }
 
+//boolean to prevent placement of towers off screen
 function mouseOnCanvas(){
 	if (mouseX > 0 && mouseX < 900){
 		if (mouseY > 0 && mouseY < 550){
@@ -161,6 +168,7 @@ function Tower(x, y) {
 	this.sprite.addImage(tImage);
 	//add to tower array
 	towers.push(this);
+	this.sprite.addToGroup(towhurs);
 }
 
 function fire(towerPosX, towerPosY, ){
@@ -194,6 +202,7 @@ function timer(){
 	},1000);
 }
 
+//begin waves endlessly every 15 seconds.
 function startWaves(){
 	setInterval(function(){
 		if(lives <= 0) return;

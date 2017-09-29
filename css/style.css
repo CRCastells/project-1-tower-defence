@@ -75,7 +75,7 @@ div {
 }
 /* play button */
 #play {
-	margin: 200px auto;
+	margin: 200px auto 40px auto;
 	height: 50px;
 	width: 200px;
 	background: blue;
