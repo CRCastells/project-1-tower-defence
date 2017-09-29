@@ -46,9 +46,8 @@ function setup() {
   bullets = new Group();
   towhurs = new Group();
 	//first time calls to set up the waves
-	timer();
 	getScores();
-	startWaves();
+	document.getElementById('next').addEventListener("click",startNextWave);
 	initUpgrades();
 }
 
@@ -66,7 +65,6 @@ function draw() {
   	document.getElementById('score').innerText = "Score: " + score;
   	document.getElementById('range').innerHTML = "Range <br> " + rangecost + " gold";
   	document.getElementById('speed').innerHTML = "Fire Speed <br> " + speedcost + " gold";
-
   	//when enemy sprites hit the bottom, bounce!
   	eSprites.bounce(bottom,function(sprite){
   		//bounce does all the position work for me, 
@@ -202,15 +200,7 @@ function timer(){
 	},1000);
 }
 
-//begin waves endlessly every 15 seconds.
-function startWaves(){
-	setInterval(function(){
-		if(lives <= 0) return;
-		wave(level);
-		
-		level++;
-	},15000);	
-}
+
 
 //function to place all enemy sprites on canvas
 function wave(level){
@@ -310,6 +300,12 @@ function initUpgrades(){
 			speedcost *= 2;
 		}
 	});
+}
+
+function startNextWave() {
+	timer();
+	wave(level++);
+	
 }
 
 
